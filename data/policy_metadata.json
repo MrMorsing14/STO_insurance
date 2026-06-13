@@ -1,0 +1,875 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "source": "Nykredit Mastercard forsikringsbetingelser",
+    "generated_for": "STO prototype - RAG metadata layer",
+    "gældende_fra": {
+      "business": "1. april 2023",
+      "gold_platinum": "1. januar 2026",
+      "world_elite": "1. januar 2026"
+    },
+    "forsikringsgiver": "Forsikringsselskabet Privatsikring A/S",
+    "forsikringstager": "Nykredit Bank A/S"
+  },
+  "kortniveauer": {
+    "mastercard_blue_shopping": {
+      "gruppe": "standard",
+      "rejseforsikring": false,
+      "købsforsikring": true,
+      "note": "Ingen rejsedækning. Kun Sektion C/D købsforsikring."
+    },
+    "mastercard_gold": {
+      "gruppe": "gold_platinum",
+      "family_variant": "mastercard_gold_family",
+      "family_note": "Gold Family kræver IKKE betaling med kortet for rejsedækning",
+      "rejsevarighed_max_dage": 60,
+      "krav_om_kortbetaling": false,
+      "dækker_forretningsrejser": true,
+      "dækker_private_rejser": true,
+      "dækker_i_bopælsland": false,
+      "forsikrede_personer": {
+        "kortholder": true,
+        "ægtefælle_samlever": true,
+        "udeboende_børn_under_18": true,
+        "hjemmeboende_børn_op_til_22": true,
+        "betingelse": "Rejsen skal foretages sammen med kortholder"
+      },
+      "dækninger": {
+        "sygdom_og_hjemtransport": {
+          "dækket": true,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "tandlidelser_max": 10000,
+          "betingelser": [
+            "Akut opstået sygdom/tilskadekomst under rejse",
+            "Syge-/hjemtransport skal aftales med SOS/Privatsikring",
+            "Blå EU-sygesikringskort skal medbringes i EU/EØS"
+          ],
+          "undtagelser": [
+            "Sygdom opstået før rejsen hvor behandling måtte forventes",
+            "Selvmordsforsøg, beruselse, narkotika",
+            "Behandling efter hjemkomst til bopælsland",
+            "Nægtet overflytning/hjemtransport ordineret af SOS"
+          ]
+        },
+        "sygeledsagelse": {
+          "dækket": true,
+          "max_personer": 2,
+          "max_dækning": 50000,
+          "hotel_forplejning_pr_dag": 1500,
+          "hotel_max_døgn": 10,
+          "betingelser": [
+            "Hospitalsindlæggelse minimum 3 døgn",
+            "Ordineret hjemtransport af SOS",
+            "Dødsfald på rejsen"
+          ]
+        },
+        "tilkaldelse": {
+          "dækket": true,
+          "max_personer": 2,
+          "max_dækning": 50000,
+          "hotel_forplejning_pr_dag": 1500,
+          "hotel_max_døgn": 10,
+          "betingelser": [
+            "Hospitalsindlæggelse mindst 3 døgn",
+            "Forsikrede afgår ved døden",
+            "Aftale med SOS' læge påkrævet"
+          ]
+        },
+        "hjemkaldelse": {
+          "dækket": true,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "betingelser": [
+            "Dødsfald/hospitalsindlæggelse hos nære familiemedlemmer",
+            "Brand/indbrud i bolig eller virksomhed (politirapport)",
+            "Bedrageriske handlinger i virksomhed",
+            "Overenskomststridig arbejdsnedlæggelse"
+          ],
+          "undtagelser": [
+            "Begivenheden indtrådt før afrejse"
+          ]
+        },
+        "privatansvarsforsikring": {
+          "dækket": true,
+          "personskade_max": 5000000,
+          "tingskade_max": 3000000,
+          "hotelansvar_max": 25000,
+          "undtagelser": [
+            "Erhvervsmæssig skade",
+            "Ting forsikrede har til låns/opbevaring/varetægt",
+            "Motorkøretøj, søfartøj, luftfartøj, hunde"
+          ]
+        },
+        "retshjælp_og_sikkerhedsstillelse": {
+          "dækket": true,
+          "retshjælp_max": 150000,
+          "sikkerhedsstillelse_max": 150000
+        },
+        "afbestillingsforsikring": {
+          "dækket": true,
+          "max_pr_person": 20000,
+          "max_pr_hændelse": 40000,
+          "betingelser": [
+            "Dødsfald eller alvorlig akut sygdom/tilskadekomst",
+            "Lægeerklæring påkrævet",
+            "Dækker også nære familiemedlemmers sygdom/død",
+            "Arbejdsgivers inddragelse af ferie (kollega død, <30 dage)",
+            "Brand/indbrud i bolig/virksomhed",
+            "Offentlig indgriben pga. epidemi/naturkatastrofe"
+          ],
+          "undtagelser": [
+            "Sygdom til stede ved bestilling",
+            "Rejsearrangør insolvent/konkurs",
+            "Udgifter refunderet af arrangør"
+          ],
+          "ophør": "Ved check-in i lufthavn eller i transportmiddel"
+        },
+        "overfald": {
+          "dækket": true,
+          "max_pr_person": 250000,
+          "betingelser": [
+            "Forsætlig vold af tredje person",
+            "Anmeldelse til politi påkrævet"
+          ]
+        },
+        "rejseulykke": {
+          "dækket": false
+        },
+        "bagageforsinkelse": {
+          "dækket": false
+        },
+        "flyforsinkelse": {
+          "dækket": false
+        },
+        "forsinket_fremmøde": {
+          "dækket": false
+        },
+        "eftersøgning_og_redning": {
+          "dækket": false
+        },
+        "evakuering_og_ufrivilligt_ophold": {
+          "dækket": false
+        },
+        "bagagedækning": {
+          "dækket": false
+        },
+        "feriekompensation": {
+          "dækket": false
+        },
+        "forsikring_ved_billeje": {
+          "dækket": false
+        }
+      }
+    },
+    "mastercard_platinum": {
+      "gruppe": "gold_platinum",
+      "family_variant": "mastercard_platinum_family",
+      "family_note": "Platinum Family kræver IKKE betaling med kortet for rejsedækning. Billeje kræver dog kortbetaling.",
+      "rejsevarighed_max_dage": 60,
+      "krav_om_kortbetaling": false,
+      "krav_om_kortbetaling_billeje": true,
+      "dækker_forretningsrejser": true,
+      "dækker_private_rejser": true,
+      "dækker_i_bopælsland": false,
+      "forsikrede_personer": {
+        "kortholder": true,
+        "ægtefælle_samlever": true,
+        "udeboende_børn_under_18": true,
+        "hjemmeboende_børn_op_til_22": true,
+        "betingelse": "Rejsen skal foretages sammen med kortholder"
+      },
+      "dækninger": {
+        "sygdom_og_hjemtransport": {
+          "dækket": true,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "tandlidelser_max": 10000,
+          "betingelser": [
+            "Akut opstået sygdom/tilskadekomst under rejse",
+            "Syge-/hjemtransport skal aftales med SOS/Privatsikring",
+            "Blå EU-sygesikringskort skal medbringes i EU/EØS"
+          ],
+          "undtagelser": [
+            "Sygdom opstået før rejsen hvor behandling måtte forventes",
+            "Selvmordsforsøg, beruselse, narkotika",
+            "Behandling efter hjemkomst til bopælsland",
+            "Nægtet overflytning/hjemtransport ordineret af SOS"
+          ]
+        },
+        "sygeledsagelse": {
+          "dækket": true,
+          "max_personer": 2,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "hotel_forplejning_pr_dag": 1500,
+          "hotel_max_døgn": 10,
+          "betingelser": [
+            "Hospitalsindlæggelse minimum 3 døgn",
+            "Ordineret hjemtransport af SOS",
+            "Dødsfald på rejsen"
+          ]
+        },
+        "tilkaldelse": {
+          "dækket": true,
+          "max_personer": 2,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "hotel_forplejning_pr_dag": 1500,
+          "hotel_max_døgn": 10,
+          "betingelser": [
+            "Hospitalsindlæggelse mindst 3 døgn",
+            "Forsikrede afgår ved døden",
+            "Aftale med SOS' læge påkrævet"
+          ]
+        },
+        "hjemkaldelse": {
+          "dækket": true,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "betingelser": [
+            "Dødsfald/hospitalsindlæggelse hos nære familiemedlemmer",
+            "Brand/indbrud i bolig eller virksomhed (politirapport)",
+            "Bedrageriske handlinger i virksomhed",
+            "Overenskomststridig arbejdsnedlæggelse"
+          ]
+        },
+        "privatansvarsforsikring": {
+          "dækket": true,
+          "personskade_max": 5000000,
+          "tingskade_max": 3000000,
+          "hotelansvar_max": 25000
+        },
+        "retshjælp_og_sikkerhedsstillelse": {
+          "dækket": true,
+          "retshjælp_max": 250000,
+          "sikkerhedsstillelse_max": 250000
+        },
+        "afbestillingsforsikring": {
+          "dækket": true,
+          "max_pr_person": 25000,
+          "max_pr_hændelse": 75000,
+          "betingelser": [
+            "Dødsfald eller alvorlig akut sygdom/tilskadekomst",
+            "Lægeerklæring påkrævet",
+            "Dækker også nære familiemedlemmers sygdom/død",
+            "Arbejdsgivers inddragelse af ferie (kollega død, <30 dage)",
+            "Brand/indbrud i bolig/virksomhed",
+            "Offentlig indgriben pga. epidemi/naturkatastrofe"
+          ],
+          "undtagelser": [
+            "Sygdom til stede ved bestilling",
+            "Rejsearrangør insolvent/konkurs",
+            "Udgifter refunderet af arrangør"
+          ],
+          "ophør": "Ved check-in i lufthavn eller i transportmiddel"
+        },
+        "overfald": {
+          "dækket": true,
+          "max_pr_person": 500000
+        },
+        "rejseulykke": {
+          "dækket": true,
+          "dødsfald_max": 2000000,
+          "dødsfald_under_18_max": 20000,
+          "varigt_mén_max": 2000000,
+          "tandskade_max": 20000,
+          "betingelser": [
+            "Pludselig hændelse der forårsager personskade",
+            "Dødsfald inden 1 år fra skadedato",
+            "Varig medicinsk invaliditet mindst 5%"
+          ],
+          "undtagelser": [
+            "Sygdom/latente sygdomsanlæg",
+            "Motorcykel/scooter som fører/passager",
+            "Tygning/bidning (tandskade)",
+            "Smitte med bakterier/virus"
+          ]
+        },
+        "bagageforsinkelse": {
+          "dækket": true,
+          "aktivering_timer": 4,
+          "max_pr_person_pr_rejse": 7500,
+          "betingelser": [
+            "Indskrevet bagage forsinket >4 timer",
+            "PIR-rapport fra luftfartsselskab påkrævet",
+            "Kvitteringer for indkøb påkrævet"
+          ],
+          "undtagelser": [
+            "Forsinkelse på hjemrejsen",
+            "Indkøb efter bagage er udleveret"
+          ]
+        },
+        "flyforsinkelse": {
+          "dækket": true,
+          "aktivering_timer": 4,
+          "max_pr_person_pr_rejse": 7500,
+          "betingelser": [
+            "Aflyst fly, forsinket fly, eller overbooking",
+            "Forsinkelse >4 timer"
+          ],
+          "undtagelser": [
+            "Fly forsinket i bopælslandet",
+            "Alternativt fly tilbudt inden 4 timer",
+            "Udgifter til flybilletter"
+          ]
+        },
+        "forsinket_fremmøde": {
+          "dækket": true,
+          "max_pr_person": 15000,
+          "hotel_forplejning_pr_dag": 1000,
+          "betingelser": [
+            "Uforskyldt og uforudsigeligt for sent fremmøde",
+            "Gælder fra bopæl til slutdestination"
+          ],
+          "undtagelser": [
+            "Egen skyld",
+            "Kø ved check-in",
+            "Rejse bestilt <24 timer før afrejse",
+            "Ændrede afgangstider varslet skriftligt"
+          ]
+        },
+        "eftersøgning_og_redning": {
+          "dækket": true,
+          "max_pr_person_pr_skade": 50000,
+          "radius_km": 50,
+          "betingelser": [
+            "Skal aftales med SOS"
+          ]
+        },
+        "evakuering_og_ufrivilligt_ophold": {
+          "dækket": true,
+          "evakuering": "Rimelige og nødvendige udgifter",
+          "ufrivilligt_ophold_max_pr_person": 50000,
+          "mad_pr_dag": 500,
+          "hotel_pr_dag": 2500,
+          "betingelser": [
+            "Krig, terror, naturkatastrofer, livstruende epidemier",
+            "Opfordring fra Udenrigsministeriet eller lignende",
+            "Eller Privatsikrings vurdering af markant øget risiko",
+            "Terrorhandling inden 20 km radius"
+          ]
+        },
+        "bagagedækning": {
+          "dækket": true,
+          "max_pr_person_pr_rejse": 30000,
+          "max_pr_hændelse_pr_rejse": 90000,
+          "kontanter_max": 6000,
+          "samlerværdi_max": 6000,
+          "fotoudstyr_elektronik_max_pr_genstand": 10000,
+          "pc_elektronik_max_pr_genstand": 10000,
+          "billetter_pas_max": 6000,
+          "værdigenstande_max": 6000,
+          "tyveri_fra_køretøj_max": 10000,
+          "selvrisikodækning": 2000,
+          "betingelser": [
+            "Brand, indbrudstyveri, røveri, ran",
+            "Politianmeldelse ved værdi >1.500 kr."
+          ],
+          "undtagelser": [
+            "Glemte/tabte/forlagte ting",
+            "Simpelt tyveri",
+            "Mangelfuld emballage"
+          ]
+        },
+        "feriekompensation": {
+          "dækket": true,
+          "max_pr_person": 25000,
+          "max_pr_hændelse": 75000,
+          "betingelser": [
+            "Akut sygdom/tilskadekomst med hjemtransport af SOS",
+            "Hjemkaldelse i første halvdel af ferien",
+            "Indlæggelse/sengeleje >halvdelen af rejseperioden",
+            "Erstatningsrejse eller dagpris pr. ødelagt feriedøgn"
+          ],
+          "udbetalingsregler": [
+            "Der udbetales KUN til den forsikrede person som skaden vedrører — IKKE til medrejsende der ikke selv er syge/skadet",
+            "Hvis skadelidte er under 18 år, kan ÉN forsikret ledsager også opnå kompensation for ødelagt ferie — men ikke flere",
+            "Medrejsende familiemedlemmer der stadig kan holde ferie (fx gå på stranden, spise ude) er IKKE berettiget til kompensation",
+            "Antallet af ødelagte feriedøgn beregnes fra kl. 00 døgnet efter første lægebesøg til udskrivelse/ophør af sengeleje"
+          ],
+          "kompensation_fysiske_aktiviteter": true
+        },
+        "forsikring_ved_billeje": {
+          "dækket": true,
+          "krav_om_kortbetaling": true,
+          "kasko_max": 500000,
+          "ansvar_personskade_max": 8000000,
+          "ansvar_tingskade_max": 8000000,
+          "max_lejeperiode_døgn": 21,
+          "max_bilpris": 3000000,
+          "betingelser": [
+            "Betaling med Mastercard Platinum kort",
+            "Lejet i kortholders navn",
+            "Gyldigt kørekort",
+            "Lejekontraktens betingelser overholdt"
+          ],
+          "undtagelser_køretøjer": [
+            "Go-carts, fritidskøretøjer",
+            "Campingvogne, lastbiler, motorcykler",
+            "Off-road køretøjer (fx Jeep Wrangler)",
+            "Veteranbiler (>20 år eller ej produceret i 10 år)",
+            "Limousiner >6 meter"
+          ]
+        }
+      }
+    },
+    "world_elite": {
+      "gruppe": "world_elite",
+      "family_variant": "world_elite_family",
+      "family_note": "World Elite Family har selvstændig rejseforsikring på lige fod med hovedkortholders forsikring",
+      "rejsevarighed_max_dage": 60,
+      "krav_om_kortbetaling": false,
+      "krav_om_kortbetaling_billeje": true,
+      "dækker_forretningsrejser": true,
+      "dækker_private_rejser": true,
+      "dækker_studierejser": true,
+      "dækker_frivilligt_arbejde": true,
+      "dækker_i_bopælsland": false,
+      "forsikrede_personer": {
+        "kortholder": true,
+        "ægtefælle_samlever": true,
+        "børn_stedbørn_skilsmissebørn_adoptivbørn_plejebørn_under_18": true,
+        "børn_18_til_22_hjemmeboende": true,
+        "børnebørn_under_18": true,
+        "betingelse": "Rejsen skal foretages sammen med kortholder"
+      },
+      "dækninger": {
+        "sygdom_og_hjemtransport": {
+          "dækket": true,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "tandlidelser_max": 10000,
+          "betingelser": [
+            "Akut opstået sygdom/tilskadekomst under rejse",
+            "Syge-/hjemtransport skal aftales med SOS/Privatsikring",
+            "Blå EU-sygesikringskort skal medbringes i EU/EØS"
+          ],
+          "undtagelser": [
+            "Sygdom opstået før rejsen hvor behandling måtte forventes",
+            "Selvmordsforsøg, beruselse, narkotika",
+            "Behandling efter hjemkomst til bopælsland",
+            "Nægtet overflytning/hjemtransport"
+          ]
+        },
+        "krisehjælp": {
+          "dækket": true,
+          "pr_behandling": 1500,
+          "max_pr_hændelse": 15000,
+          "max_behandlinger_pr_person": 10,
+          "betingelser": [
+            "Krig, terrorhandlinger, naturkatastrofer, epidemier",
+            "Vidne til pludselig død eller voldelig overfald",
+            "Behandling påbegyndes senest 4 uger efter hændelse",
+            "Afsluttes senest 3 måneder efter første behandling",
+            "SOS skal kontaktes inden behandling"
+          ]
+        },
+        "sygeledsagelse": {
+          "dækket": true,
+          "max_personer": "2 medrejsende forsikrede eller 1 valgfri person",
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "hotel_forplejning_pr_dag_pr_person": 1500,
+          "hotel_max_døgn": 14,
+          "børn_under_18_altid_dækket": true
+        },
+        "tilkaldelse": {
+          "dækket": true,
+          "max_personer": 2,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "hotel_forplejning_pr_dag": 1500,
+          "hotel_max_døgn": 14,
+          "børn_børnebørn_under_18_dækket": true
+        },
+        "hjemkaldelse": {
+          "dækket": true,
+          "max_dækning": "Rimelige og nødvendige udgifter"
+        },
+        "flyforsinkelse": {
+          "dækket": true,
+          "aktivering_timer": 3,
+          "max_pr_person_pr_rejse": 10000,
+          "nødindkøb_tøj_toiletartikler": 500,
+          "undtagelser": [
+            "Alternativt fly tilbudt inden 3 timer",
+            "Udgifter til flybilletter"
+          ]
+        },
+        "forsinket_fremmøde": {
+          "dækket": true,
+          "max_pr_person": 30000,
+          "max_pr_hændelse": 90000,
+          "dækker": "Transport, kost og logi"
+        },
+        "bagageforsinkelse": {
+          "dækket": true,
+          "aktivering_timer": 3,
+          "max_pr_person_pr_rejse": 10000,
+          "betingelser": [
+            "Indskrevet bagage forsinket >3 timer",
+            "PIR-rapport fra luftfartsselskab påkrævet"
+          ],
+          "undtagelser": [
+            "Forsinkelse på hjemrejsen",
+            "Indkøb efter bagage er udleveret",
+            "Medicin, briller, nøgler, fødevarer"
+          ]
+        },
+        "bagagedækning": {
+          "dækket": true,
+          "max_pr_person_pr_rejse": 50000,
+          "max_pr_hændelse": 150000,
+          "kontanter_max": 10000,
+          "samlerværdi_max": 10000,
+          "fotoudstyr_elektronik_max_pr_genstand": 10000,
+          "pc_elektronik_max_pr_genstand": 15000,
+          "billetter_pas_max": 12000,
+          "værdigenstande_max": 10000,
+          "tyveri_fra_køretøj_max": 30000,
+          "tyveri_fra_køretøj_pr_genstand_max": 5000,
+          "selvrisikodækning": 5000
+        },
+        "privatansvarsforsikring": {
+          "dækket": true,
+          "personskade_max": 10000000,
+          "tingskade_max": 10000000,
+          "hotelansvar_max": 100000
+        },
+        "ferieboligsikring": {
+          "dækket": true,
+          "max_pr_rejse": 30000,
+          "årsager": [
+            "Brand",
+            "Oversvømmelse",
+            "Jordskælv",
+            "Storm",
+            "Lyn",
+            "Eksplosion",
+            "Orkan"
+          ],
+          "undtagelser": [
+            "Udlejer genhuser i anden feriebolig",
+            "Udgifter refunderet af udlejer/arrangør",
+            "Feriebolig i bopælsland eller egen bolig i udlandet"
+          ]
+        },
+        "retshjælp_og_sikkerhedsstillelse": {
+          "dækket": true,
+          "retshjælp_max": 250000,
+          "sikkerhedsstillelse_max": 500000
+        },
+        "overfald": {
+          "dækket": true,
+          "max_pr_person": 650000
+        },
+        "forsikring_ved_billeje": {
+          "dækket": true,
+          "krav_om_kortbetaling": true,
+          "ansvar_tingskade_max": 8000000,
+          "ansvar_personskade_max": 8000000,
+          "kasko_max": 500000,
+          "max_lejeperiode_døgn": 21,
+          "betingelser": [
+            "Betaling med World Elite Mastercard",
+            "Lejet i kortholders navn",
+            "Gyldigt kørekort",
+            "Medchauffører påtegnet lejekontrakten"
+          ],
+          "subsidiær_dækning": true,
+          "note": "Hvis bilen er forsikret via udlejningsselskabet dækkes eventuel selvrisiko"
+        },
+        "feriekompensation_og_erstatningsrejse": {
+          "dækket": true,
+          "max_pr_person": 50000,
+          "max_pr_hændelse": 200000,
+          "erstatningsrejse_betingelser": [
+            "Hjemtransporteret i første halvdel af rejsen",
+            "Hjemkaldt i første halvdel af rejsen",
+            "Indlagt >halvdelen af planlagt rejseperiode"
+          ],
+          "feriekompensation_betingelser": [
+            "Akut sygdom/tilskadekomst med indlæggelse/sengeleje",
+            "Hjemtransporteret",
+            "Dagspris pr. ødelagt feriedøgn"
+          ],
+          "udbetalingsregler": [
+            "Forsikringen dækker rejsens dagspris pr. ødelagt feriedøgn til den skadelidte",
+            "Hvis skadelidte er under 18 år, vil ÉN forsikret ledsager også kunne opnå ødelagt ferie — men ikke flere",
+            "Medforsikret som sygeledsager forsikrede jf. afsnit 6.0 kan også kompenseres",
+            "Der ydes ingen erstatning for hjemrejsedagen og aldrig ud over forsikringsperioden"
+          ],
+          "kompensation_fysiske_aktiviteter": true
+        },
+        "eftersøgning_og_redning": {
+          "dækket": true,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "radius_km": 50,
+          "betingelser": [
+            "Skal aftales med SOS"
+          ]
+        },
+        "evakuering_og_ufrivilligt_ophold": {
+          "dækket": true,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "ophold_pr_person_max": 15000,
+          "ophold_pr_hændelse_max": 45000,
+          "betingelser": [
+            "Krig, terror, naturkatastrofer, livstruende epidemier",
+            "Opfordring fra Udenrigsministeriet eller lignende"
+          ]
+        },
+        "afbestillingsforsikring": {
+          "dækket": true,
+          "max_pr_person": 50000,
+          "max_pr_hændelse": 200000,
+          "betingelser": [
+            "Dødsfald eller alvorlig akut sygdom/tilskadekomst",
+            "Lægeerklæring med diagnose påkrævet",
+            "Dækker også nære familiemedlemmers sygdom/død",
+            "Dækker rejseledsagers afbestilling hvis kortholder ellers rejser alene",
+            "Udenrigsministeriet fraråder rejser til destination (hvis bestilt mens gul/grøn)",
+            "Brand/indbrud, bedrageri i virksomhed, overenskomststridig strejke",
+            "Offentlig indgriben pga. epidemi/pandemi/naturkatastrofe"
+          ],
+          "undtagelser": [
+            "Stress, depression og andre sindslidelser",
+            "Sygdom til stede ved bestilling",
+            "Rejsearrangør insolvent/konkurs",
+            "Destination allerede rød/orange ved køb"
+          ],
+          "ophør": "Ved check-in i lufthavn eller i transportmiddel"
+        }
+      }
+    },
+    "mastercard_business": {
+      "gruppe": "business",
+      "rejsevarighed_max_dage": 60,
+      "krav_om_kortbetaling": false,
+      "dækker_forretningsrejser": true,
+      "dækker_private_rejser": true,
+      "dækker_i_bopælsland": false,
+      "dækker_i_bopælsland_note": "Rejser i DK kræver min. 1 overnatning uden for bopælskommune",
+      "forsikrede_personer": {
+        "kortholder": true,
+        "ægtefælle_samlever": true,
+        "børn_under_18": true,
+        "børn_18_til_22_hjemmeboende": true,
+        "betingelse": "Rejsen skal foretages i samme transportmiddel"
+      },
+      "dækninger": {
+        "afbestillingsforsikring": {
+          "dækket": true,
+          "max_pr_person": 10000,
+          "max_pr_hændelse": 10000
+        },
+        "sygdom_og_hjemtransport": {
+          "dækket": true,
+          "max_dækning": 2000000,
+          "tandlidelser_max": 10000
+        },
+        "sygeledsagelse": {
+          "dækket": true,
+          "max_personer": 1,
+          "max_dækning": 50000,
+          "hotel_forplejning_pr_dag": 1500,
+          "hotel_max_døgn": 6
+        },
+        "tilkaldelse": {
+          "dækket": true,
+          "max_personer": 1,
+          "max_dækning": 50000,
+          "hotel_forplejning_pr_dag": 1500,
+          "hotel_max_døgn": 6
+        },
+        "hjemkaldelse": {
+          "dækket": true,
+          "max_dækning": 30000
+        },
+        "flyforsinkelse": {
+          "dækket": true,
+          "aktivering_timer": 4,
+          "max_pr_person_pr_rejse": 6000
+        },
+        "forsinket_fremmøde": {
+          "dækket": true,
+          "max_pr_person": 10000,
+          "hotel_forplejning_pr_dag": 1500
+        },
+        "bagageforsinkelse": {
+          "dækket": true,
+          "aktivering_timer": 4,
+          "max_pr_person_pr_rejse": 6000
+        },
+        "bagagedækning": {
+          "dækket": true,
+          "max_pr_person_pr_rejse": 25000,
+          "max_pr_hændelse_pr_rejse": 75000,
+          "kontanter_max": 5000,
+          "fotoudstyr_max": 15000,
+          "pc_elektronik_max": 5000,
+          "tyveri_fra_køretøj_max": 5000,
+          "selvrisikodækning": 2000
+        },
+        "privatansvarsforsikring": {
+          "dækket": false
+        },
+        "retshjælp_og_sikkerhedsstillelse": {
+          "dækket": false
+        },
+        "overfald": {
+          "dækket": false
+        },
+        "forsikring_ved_billeje": {
+          "dækket": false
+        },
+        "rejseulykke": {
+          "dækket": false
+        },
+        "feriekompensation": {
+          "dækket": false
+        },
+        "eftersøgning_og_redning": {
+          "dækket": false
+        },
+        "evakuering_og_ufrivilligt_ophold": {
+          "dækket": false
+        }
+      }
+    },
+    "mastercard_business_platinum": {
+      "gruppe": "business",
+      "rejsevarighed_max_dage": 60,
+      "krav_om_kortbetaling": false,
+      "krav_om_kortbetaling_billeje": true,
+      "dækker_forretningsrejser": true,
+      "dækker_private_rejser": true,
+      "dækker_i_bopælsland": false,
+      "dækker_i_bopælsland_note": "Rejser i DK kræver min. 1 overnatning uden for bopælskommune",
+      "forsikrede_personer": {
+        "kortholder": true,
+        "ægtefælle_samlever": true,
+        "børn_under_18": true,
+        "børn_18_til_22_hjemmeboende": true,
+        "betingelse": "Rejsen skal foretages i samme transportmiddel"
+      },
+      "dækninger": {
+        "afbestillingsforsikring": {
+          "dækket": true,
+          "max_pr_person": 25000,
+          "max_pr_hændelse": 60000
+        },
+        "sygdom_og_hjemtransport": {
+          "dækket": true,
+          "max_dækning": 4000000,
+          "tandlidelser_max": 20000
+        },
+        "sygeledsagelse": {
+          "dækket": true,
+          "max_personer": 1,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "hotel_forplejning_pr_dag": 1500,
+          "hotel_max_døgn": 6
+        },
+        "tilkaldelse": {
+          "dækket": true,
+          "max_personer": 1,
+          "max_dækning": "Rimelige og nødvendige udgifter",
+          "hotel_forplejning_pr_dag": 1500,
+          "hotel_max_døgn": 6
+        },
+        "hjemkaldelse": {
+          "dækket": true,
+          "max_dækning": "Rimelige og nødvendige udgifter"
+        },
+        "flyforsinkelse": {
+          "dækket": true,
+          "aktivering_timer": 4,
+          "max_pr_person_pr_rejse": 10000
+        },
+        "forsinket_fremmøde": {
+          "dækket": true,
+          "max_pr_person": 10000,
+          "hotel_forplejning_pr_dag": 1500
+        },
+        "bagageforsinkelse": {
+          "dækket": true,
+          "aktivering_timer": 4,
+          "max_pr_person_pr_rejse": 7500
+        },
+        "bagagedækning": {
+          "dækket": true,
+          "max_pr_person_pr_rejse": 25000,
+          "max_pr_hændelse_pr_rejse": 75000,
+          "kontanter_max": 5000,
+          "fotoudstyr_max": 15000,
+          "pc_elektronik_max": 5000,
+          "tyveri_fra_køretøj_max": 5000,
+          "selvrisikodækning": 2000
+        },
+        "privatansvarsforsikring": {
+          "dækket": true,
+          "personskade_max": 5000000,
+          "tingskade_max": 2000000,
+          "hotelansvar_max": 25000
+        },
+        "retshjælp_og_sikkerhedsstillelse": {
+          "dækket": true,
+          "retshjælp_max": 125000,
+          "sikkerhedsstillelse_max": 100000
+        },
+        "overfald": {
+          "dækket": true,
+          "max_pr_person": 300000
+        },
+        "forsikring_ved_billeje": {
+          "dækket": true,
+          "type": "Kun selvrisikodækning",
+          "krav_om_kortbetaling": true,
+          "selvrisiko_kasko_max": 10000,
+          "max_lejeperiode_døgn": 21,
+          "betingelser": [
+            "Betaling med Business Platinum kort",
+            "Kun personbiler",
+            "Lejet i forsikrede's navn"
+          ]
+        },
+        "rejseulykke": {
+          "dækket": true,
+          "dødsfald_max": 1000000,
+          "dødsfald_under_18_max": 20000,
+          "varigt_mén_max": 1000000,
+          "tandskade_max": 20000
+        },
+        "feriekompensation": {
+          "dækket": false
+        },
+        "eftersøgning_og_redning": {
+          "dækket": false
+        },
+        "evakuering_og_ufrivilligt_ophold": {
+          "dækket": false
+        }
+      }
+    }
+  },
+  "generelle_undtagelser": {
+    "note": "Gælder for ALLE kortniveauer",
+    "undtagelser": [
+      "Forsæt, grov uagtsomhed, beruselse, narkotika, medicinmisbrug",
+      "Kriminelle handlinger, slagsmål (undtagen selvforsvar)",
+      "Professionel sport (dog dækket som privatperson under transport/ophold)",
+      "Motorløb af enhver art",
+      "Besætningsmedlem under flyvning",
+      "Offentlig transportørs konkurs",
+      "Civile uroligheder, lockout, blokader, strejke",
+      "Nye love/regulativer fra regering/myndighed",
+      "Ekspeditioner til polarområder/uudforskede steder",
+      "Konfiskation/beslaglæggelse af told/myndighed",
+      "Rejser der primært har medicinsk formål",
+      "Udgifter dækket af blå EU-sygesikringskort"
+    ]
+  },
+  "kroniske_lidelser": {
+    "note": "Gælder for ALLE kortniveauer",
+    "regel": "Kun dækket hvis stabil - dvs. inden for 2 måneder før afrejse/bestilling IKKE hospitalsindlagt, IKKE modtaget lægebehandling (undtagen kontrolbesøg), IKKE ændringer i medicinering",
+    "forhåndsvurdering": "Via SOS hjemmeside: www.sos.eu → Medicinsk forhåndsvurdering"
+  },
+  "krigs_og_atomskader": {
+    "generelt": "Ikke dækket",
+    "undtagelse": "Dækket i op til 1 måned fra konfliktens udbrud hvis forsikrede allerede opholder sig i landet",
+    "betingelse": "Forsikrede må ikke rejse til land der allerede er i konflikt"
+  }
+}

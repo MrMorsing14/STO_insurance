@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nykredit — Forsikringsskade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <div class="logo-mark"><i class="ti ti-shield-check"></i></div>
+        <div>
+          <span class="logo-name">Nykredit</span>
+          <span class="logo-sub">Skadebehandling</span>
+        </div>
+      </div>
+      <div class="header-badge">STO Prototype</div>
+    </header>
+
+    <!-- ════════ FORM VIEW ════════ -->
+    <main id="formView" class="fade-in">
+      <div class="hero">
+        <h1>Anmeld din forsikringsskade</h1>
+        <p>Beskriv hvad der skete — vi opdeler og vurderer hver del af dit krav automatisk.</p>
+      </div>
+
+      <form id="claimForm" class="card" onsubmit="return false;">
+        <div class="form-section">
+          <div class="section-label"><i class="ti ti-credit-card" aria-hidden="true"></i> Kort</div>
+          <div class="field">
+            <label for="kortniveau">Kortniveau</label>
+            <select id="kortniveau" required>
+              <option value="">Vælg dit kort…</option>
+              <option value="mastercard_gold">Mastercard Gold</option>
+              <option value="mastercard_gold_family">Mastercard Gold Family</option>
+              <option value="mastercard_platinum" selected>Mastercard Platinum</option>
+              <option value="mastercard_platinum_family">Mastercard Platinum Family</option>
+              <option value="world_elite">World Elite Mastercard</option>
+              <option value="world_elite_family">World Elite Family</option>
+              <option value="mastercard_business">Mastercard Business</option>
+              <option value="mastercard_business_platinum">Business Platinum</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-label"><i class="ti ti-calendar-event" aria-hidden="true"></i> Rejse &amp; tidspunkt</div>
+          <div class="field-row field-row-3">
+            <div class="field">
+              <label for="haendelse_dato">Hændelsesdato</label>
+              <input type="date" id="haendelse_dato" value="2026-05-10" required>
+            </div>
+            <div class="field">
+              <label for="rejse_start">Rejse start</label>
+              <input type="date" id="rejse_start" value="2026-05-08">
+            </div>
+            <div class="field">
+              <label for="rejse_slut">Rejse slut</label>
+              <input type="date" id="rejse_slut" value="2026-05-15">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-label"><i class="ti ti-file-text" aria-hidden="true"></i> Hændelse</div>
+          <div class="field">
+            <label for="beskrivelse">Hvad skete der?</label>
+            <textarea id="beskrivelse" rows="3" required>Vores fly fra Billund til København var over 3 timer forsinket. Vi nåede derfor ikke vores separate fly fra København til Nairobi og måtte købe nye billetter.</textarea>
+          </div>
+          <div class="field">
+            <label for="dokumentation">Vedlagt dokumentation</label>
+            <textarea id="dokumentation" rows="2">Boardingkort, bekræftelse på forsinkelse fra flyselskabet, kvittering for nye billetter</textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-label"><i class="ti ti-coins" aria-hidden="true"></i> Udgiftsposter</div>
+          <p class="section-hint">Tilføj én post pr. udgift. Type er valgfri — vi vurderer selv hvilken dækning der gælder.</p>
+          <div id="postList" class="post-list"></div>
+          <button type="button" class="btn-add-post" onclick="addPost()">
+            <i class="ti ti-plus" aria-hidden="true"></i> Tilføj udgiftspost
+          </button>
+          <div class="post-total">
+            <span>Samlet krav</span>
+            <strong id="postSum">0 DKK</strong>
+          </div>
+        </div>
+
+        <div id="formError" class="form-error" style="display:none" role="alert"></div>
+
+        <button type="button" class="btn-primary" id="submitBtn" onclick="submitClaim()">
+          <span class="btn-text"><i class="ti ti-send" aria-hidden="true"></i> Indsend krav</span>
+          <span class="btn-loading" style="display:none"><span class="spinner"></span> <span id="loadingText">Behandler…</span></span>
+        </button>
+      </form>
+    </main>
+
+    <!-- ════════ RESULT VIEW ════════ -->
+    <main id="resultView" style="display:none">
+      <div id="resultCard" class="result-card fade-in">
+        <div class="result-header">
+          <div id="resultIconWrap" class="result-icon-wrap">
+            <i id="resultIcon" class="ti"></i>
+          </div>
+          <div>
+            <h2 id="resultStatus"></h2>
+            <p id="resultId" class="result-krav-id"></p>
+          </div>
+        </div>
+
+        <div class="result-body">
+
+          <!-- Delkrav-opdeling: kernen i v2 -->
+          <div id="delkravWrap" class="result-section" style="display:none">
+            <h3>Vurdering pr. delkrav</h3>
+            <div id="delkravList" class="delkrav-list"></div>
+          </div>
+
+          <div class="result-section">
+            <h3>Besked til dig</h3>
+            <p id="resultKundebesked" class="kundebesked"></p>
+          </div>
+
+          <div class="result-grid">
+            <div class="result-metric">
+              <span class="metric-label">Godkendt beløb</span>
+              <span id="resultApproved" class="metric-value metric-approved"></span>
+            </div>
+            <div class="result-metric">
+              <span class="metric-label">Ansøgt beløb</span>
+              <span id="resultAmount" class="metric-value"></span>
+            </div>
+            <div class="result-metric">
+              <span class="metric-label">Konfidens</span>
+              <span id="resultConf" class="metric-value"></span>
+            </div>
+            <div class="result-metric">
+              <span class="metric-label">Behandling</span>
+              <span id="resultType" class="metric-value"></span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-secondary" onclick="goBack()">
+          <i class="ti ti-arrow-left" aria-hidden="true"></i> Indsend nyt krav
+        </button>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span>STO Prototype</span>
+      <span class="footer-dot"></span>
+      <span>Forsikringsselskabet Privatsikring A/S</span>
+      <span class="footer-dot"></span>
+      <span>Nykredit Bank A/S</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
