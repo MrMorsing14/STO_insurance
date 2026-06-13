@@ -24,6 +24,61 @@ from src.models import (
     KravAfgørelse,
 )
 
+# Mapping fra enum-værdier til læsbare kortnavne
+_KORTNIVEAU_LABELS = {
+    "mastercard_gold": "Nykredit Mastercard Gold",
+    "mastercard_platinum": "Nykredit Mastercard Platinum",
+    "mastercard_world_elite": "Nykredit Mastercard World Elite",
+    "mastercard_gold_business": "Nykredit Mastercard Gold Business",
+    "mastercard_platinum_business": "Nykredit Mastercard Platinum Business",
+    "mastercard_world_elite_business": "Nykredit Mastercard World Elite Business",
+    "mastercard_gold_family": "Nykredit Mastercard Gold (Familiedækning)",
+    "mastercard_platinum_family": "Nykredit Mastercard Platinum (Familiedækning)",
+    "mastercard_world_elite_family": "Nykredit Mastercard World Elite (Familiedækning)",
+}
+
+# Mapping fra dækningstype til læsbar kategori
+_DÆKNINGSTYPE_LABELS = {
+    "sygdom_og_hjemtransport": "sygdom/tilskadekomst",
+    "bagageforsinkelse": "bagageforsinkelse",
+    "bagagedækning": "bagage",
+    "feriekompensation": "feriekompensation",
+    "afbestillingsforsikring": "afbestilling",
+    "flyforsinkelse": "flyforsinkelse",
+    "forsinket_fremmøde": "forsinket fremmøde",
+    "privatansvar": "privatansvar",
+    "retshjælp": "retshjælp",
+    "selvrisikodækning": "selvrisikodækning",
+    "rejsedokumenter": "rejsedokumenter",
+    "evakuering_og_eftersøgning": "evakuering og eftersøgning",
+}
+
+
+def _kortniveau_label(kortniveau) -> str:
+    """Returnerer et læsbart kortnavn, med fallback til enum-værdien."""
+    raw = kortniveau.value if hasattr(kortniveau, "value") else str(kortniveau)
+    return _KORTNIVEAU_LABELS.get(raw, raw)
+
+
+def _dækningstype_label(dækningstype: str) -> str:
+    return _DÆKNINGSTYPE_LABELS.get(dækningstype, dækningstype)
+
+
+def _find_primary_dækningstype(delafgørelser: list[DelAfgørelse]) -> str:
+    """Finder den mest fremtrædende dækningstype baseret på beløb."""
+    if not delafgørelser:
+        return "rejseforsikring"
+    typer = {}
+    for d in delafgørelser:
+        label = _dækningstype_label(d.dækningstype)
+        typer[label] = typer.get(label, 0.0) + (d.beløb_dkk or 0.0)
+    if typer:
+        primary = max(typer, key=typer.get)
+        if len(typer) > 1:
+            return f"{primary} m.fl."
+        return primary
+    return "rejseforsikring"
+
 
 def aggreger(krav: ForsikringsKrav, delafgørelser: list[DelAfgørelse]) -> KravAfgørelse:
     godkendte = [d for d in delafgørelser if d.afgørelse == DelAfgørelseType.GODKENDT]
@@ -41,7 +96,7 @@ def aggreger(krav: ForsikringsKrav, delafgørelser: list[DelAfgørelse]) -> Krav
             f"{len(reviews)} af {len(delafgørelser)} delkrav kræver manuelt review: "
             + "; ".join(f"[{d.delkrav_id}] {d.begrundelse}" for d in reviews)
         )
-        godkendt_beløb = 0.0  # ingen auto-udbetaling før den manuelle vurdering
+        godkendt_beløb = 0.0
     elif godkendte and not afviste:
         afgørelse = Afgørelse.GODKENDT
         begrundelse = f"Alle {len(delafgørelser)} delkrav godkendt"
@@ -77,35 +132,97 @@ def byg_kundebesked(
     delafgørelser: list[DelAfgørelse],
     godkendt_beløb: float,
 ) -> str:
-    """Deterministisk kundevendt besked. Ingen LLM — ingen hallucination."""
-    linjer = [f"Vedr. dit krav {krav.krav_id}:", ""]
+    """Deterministisk kundevendt besked. Ingen LLM — ingen hallucination.
 
+    Tone og struktur inspireret af erfaren sagsbehandler:
+    1. Åbning: Hvad har vi behandlet
+    2. God nyhed først (godkendelser med beløb)
+    3. Afvisninger med venlig, forklarende tone og politikhenvisninger
+    4. Venlig afslutning
+    """
+    kort_label = _kortniveau_label(krav.kortniveau)
+    emne = _find_primary_dækningstype(delafgørelser)
+    linjer = []
+
+    # ── Åbning ──────────────────────────────────────────────
+    linjer.append(
+        f"Tak for din henvendelse vedrørende {emne} under din rejse."
+    )
+    linjer.append(
+        f"Vi har gennemgået dit krav ({krav.krav_id}) i henhold til "
+        f"forsikringsbetingelserne for {kort_label}."
+    )
+    linjer.append("")
+
+    # ── Manuelt review: kort og venlig ──────────────────────
     if afgørelse == Afgørelse.MANUELT_REVIEW:
         linjer.append(
-            "Dit krav kræver en manuel vurdering af en sagsbehandler. "
-            "Du hører fra os hurtigst muligt."
+            "Dit krav kræver en nærmere vurdering af en sagsbehandler. "
+            "Du vil høre fra os hurtigst muligt med en afgørelse."
         )
+        linjer.append("")
+        linjer.append(
+            "Såfremt du har spørgsmål i mellemtiden, "
+            "er du velkommen til at kontakte os."
+        )
+        linjer.append("")
+        linjer.append("Du ønskes en god dag.")
         return "\n".join(linjer)
 
     godkendte = [d for d in delafgørelser if d.afgørelse == DelAfgørelseType.GODKENDT]
     afviste = [d for d in delafgørelser if d.afgørelse == DelAfgørelseType.AFVIST]
 
+    # ── Godkendelser (altid først — lead with good news) ────
     if godkendte:
-        linjer.append("Vi kan godkende følgende:")
+        linjer.append("Afgørelse")
+        if afgørelse == Afgørelse.GODKENDT:
+            linjer.append(
+                f"Vi kan godkende dit krav og udbetaler {godkendt_beløb:.2f} DKK "
+                f"til din NemKonto."
+            )
+        else:
+            linjer.append(
+                f"Vi kan godkende en del af dit krav og udbetaler "
+                f"{godkendt_beløb:.2f} DKK til din NemKonto."
+            )
+        linjer.append("")
+        linjer.append("Erstatningsopgørelse:")
         for d in godkendte:
-            beløb = f" ({d.godkendt_beløb_dkk:.2f} DKK)" if d.godkendt_beløb_dkk else ""
-            linjer.append(f"  • {d.beskrivelse}{beløb}")
+            beløb_str = f"{d.godkendt_beløb_dkk:.2f} DKK" if d.godkendt_beløb_dkk else "—"
+            linjer.append(f"  {d.beskrivelse}: {beløb_str}")
+        linjer.append(f"  I alt: {godkendt_beløb:.2f} DKK")
         linjer.append("")
 
+    # ── Afvisninger (venlig tone, forklarende) ──────────────
     if afviste:
-        linjer.append("Vi kan desværre ikke godkende følgende:")
-        for d in afviste:
-            linjer.append(f"  • {d.beskrivelse} — {d.begrundelse}")
+        if godkendte:
+            linjer.append(
+                "Vi har desuden gennemgået følgende dele af dit krav, "
+                "som desværre ikke kan imødekommes:"
+            )
+        else:
+            linjer.append(
+                "Vi har gennemgået dit krav, men kan desværre ikke "
+                "imødekomme det ud fra de gældende forsikringsbetingelser."
+            )
         linjer.append("")
 
-    if afgørelse == Afgørelse.AFVIST:
-        linjer.append("Dit krav er derfor afvist i sin helhed.")
-    else:
-        linjer.append(f"Samlet godkendt beløb: {godkendt_beløb:.2f} DKK af ansøgte {krav.beløb_dkk:.2f} DKK.")
+        for d in afviste:
+            beløb_note = f" ({d.beløb_dkk:.2f} DKK)" if d.beløb_dkk else ""
+            linjer.append(f"{d.beskrivelse}{beløb_note}")
+            linjer.append(f"{d.begrundelse}")
+            linjer.append("")
+
+    # ── Afslutning ──────────────────────────────────────────
+    linjer.append(
+        "Du kan finde dine forsikringsbetingelser på nykredit.dk "
+        "under dit kort, hvis du ønsker at læse bestemmelserne i deres helhed."
+    )
+    linjer.append("")
+    linjer.append(
+        "Såfremt du har yderligere spørgsmål, er du velkommen til at kontakte os."
+    )
+    linjer.append("")
+    linjer.append("Du ønskes en god dag.")
 
     return "\n".join(linjer)
