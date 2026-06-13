@@ -4,13 +4,9 @@ og bygger en deterministisk, kundevendt besked.
 
 Aggregeringsregler (i prioriteret rækkefølge):
 1. Mindst ét delkrav i manuelt_review → HELE kravet i manuelt_review.
-   Rationale: En sagsbehandler skal alligevel røre sagen, og en delvis
-   auto-udbetaling efterfulgt af en manuel afgørelse på resten giver
-   kunden to forvirrende svar på samme krav. Den itemiserede analyse
-   følger med, så sagsbehandleren har et forspring.
 2. Alle godkendt → godkendt
 3. Alle afvist → afvist
-4. Blandet godkendt/afvist → delvist_godkendt (det er "bukse-casen")
+4. Blandet godkendt/afvist → delvist_godkendt
 
 Kundebeskeden bygges af en TEMPLATE, ikke en LLM. I produktion må den
 kundevendte tekst ikke kunne hallucinere — begrundelserne fra
@@ -37,7 +33,6 @@ _KORTNIVEAU_LABELS = {
     "mastercard_world_elite_family": "Nykredit Mastercard World Elite (Familiedækning)",
 }
 
-# Mapping fra dækningstype til læsbar kategori
 _DÆKNINGSTYPE_LABELS = {
     "sygdom_og_hjemtransport": "sygdom/tilskadekomst",
     "bagageforsinkelse": "bagageforsinkelse",
@@ -55,7 +50,6 @@ _DÆKNINGSTYPE_LABELS = {
 
 
 def _kortniveau_label(kortniveau) -> str:
-    """Returnerer et læsbart kortnavn, med fallback til enum-værdien."""
     raw = kortniveau.value if hasattr(kortniveau, "value") else str(kortniveau)
     return _KORTNIVEAU_LABELS.get(raw, raw)
 
@@ -65,7 +59,6 @@ def _dækningstype_label(dækningstype: str) -> str:
 
 
 def _find_primary_dækningstype(delafgørelser: list[DelAfgørelse]) -> str:
-    """Finder den mest fremtrædende dækningstype baseret på beløb."""
     if not delafgørelser:
         return "rejseforsikring"
     typer = {}
@@ -74,9 +67,7 @@ def _find_primary_dækningstype(delafgørelser: list[DelAfgørelse]) -> str:
         typer[label] = typer.get(label, 0.0) + (d.beløb_dkk or 0.0)
     if typer:
         primary = max(typer, key=typer.get)
-        if len(typer) > 1:
-            return f"{primary} m.fl."
-        return primary
+        return f"{primary} m.fl." if len(typer) > 1 else primary
     return "rejseforsikring"
 
 
@@ -132,14 +123,7 @@ def byg_kundebesked(
     delafgørelser: list[DelAfgørelse],
     godkendt_beløb: float,
 ) -> str:
-    """Deterministisk kundevendt besked. Ingen LLM — ingen hallucination.
-
-    Tone og struktur inspireret af erfaren sagsbehandler:
-    1. Åbning: Hvad har vi behandlet
-    2. God nyhed først (godkendelser med beløb)
-    3. Afvisninger med venlig, forklarende tone og politikhenvisninger
-    4. Venlig afslutning
-    """
+    """Deterministisk kundevendt besked. Ingen LLM — ingen hallucination."""
     kort_label = _kortniveau_label(krav.kortniveau)
     emne = _find_primary_dækningstype(delafgørelser)
     linjer = []
@@ -154,7 +138,7 @@ def byg_kundebesked(
     )
     linjer.append("")
 
-    # ── Manuelt review: kort og venlig ──────────────────────
+    # ── Manuelt review ──────────────────────────────────────
     if afgørelse == Afgørelse.MANUELT_REVIEW:
         linjer.append(
             "Dit krav kræver en nærmere vurdering af en sagsbehandler. "
@@ -172,13 +156,24 @@ def byg_kundebesked(
     godkendte = [d for d in delafgørelser if d.afgørelse == DelAfgørelseType.GODKENDT]
     afviste = [d for d in delafgørelser if d.afgørelse == DelAfgørelseType.AFVIST]
 
-    # ── Godkendelser (altid først — lead with good news) ────
+    # Split godkendte into normal and goodwill
+    normal_godkendte = [d for d in godkendte if not getattr(d, "goodwill", False)]
+    goodwill_godkendte = [d for d in godkendte if getattr(d, "goodwill", False)]
+
+    normal_beløb = sum(d.godkendt_beløb_dkk or 0.0 for d in normal_godkendte)
+    goodwill_beløb = sum(d.godkendt_beløb_dkk or 0.0 for d in goodwill_godkendte)
+
+    # ── Godkendelser (altid først — good news first) ────────
     if godkendte:
         linjer.append("Afgørelse")
-        if afgørelse == Afgørelse.GODKENDT:
+        if afgørelse == Afgørelse.GODKENDT and not goodwill_godkendte:
             linjer.append(
                 f"Vi kan godkende dit krav og udbetaler {godkendt_beløb:.2f} DKK "
                 f"til din NemKonto."
+            )
+        elif afgørelse == Afgørelse.GODKENDT and goodwill_godkendte:
+            linjer.append(
+                f"Vi udbetaler {godkendt_beløb:.2f} DKK til din NemKonto."
             )
         else:
             linjer.append(
@@ -186,14 +181,34 @@ def byg_kundebesked(
                 f"{godkendt_beløb:.2f} DKK til din NemKonto."
             )
         linjer.append("")
-        linjer.append("Erstatningsopgørelse:")
-        for d in godkendte:
-            beløb_str = f"{d.godkendt_beløb_dkk:.2f} DKK" if d.godkendt_beløb_dkk else "—"
-            linjer.append(f"  {d.beskrivelse}: {beløb_str}")
-        linjer.append(f"  I alt: {godkendt_beløb:.2f} DKK")
-        linjer.append("")
 
-    # ── Afvisninger (venlig tone, forklarende) ──────────────
+        # Normal approvals — itemized
+        if normal_godkendte:
+            linjer.append("Erstatningsopgørelse:")
+            for d in normal_godkendte:
+                beløb_str = f"{d.godkendt_beløb_dkk:.2f} DKK" if d.godkendt_beløb_dkk else "—"
+                linjer.append(f"  {d.beskrivelse}: {beløb_str}")
+            if not goodwill_godkendte:
+                linjer.append(f"  I alt: {normal_beløb:.2f} DKK")
+            linjer.append("")
+
+        # Goodwill approvals — clearly framed as a one-time exception
+        if goodwill_godkendte:
+            linjer.append(
+                "Derudover har vi valgt undtagelsesvist at imødekomme følgende "
+                "udgifter. Vi gør opmærksom på, at disse udgifter normalt ikke "
+                "er dækket i henhold til forsikringsbetingelserne, men vi har "
+                "valgt at dække dem i denne sag:"
+            )
+            linjer.append("")
+            for d in goodwill_godkendte:
+                beløb_str = f"{d.godkendt_beløb_dkk:.2f} DKK" if d.godkendt_beløb_dkk else "—"
+                linjer.append(f"  {d.beskrivelse}: {beløb_str}")
+            linjer.append("")
+            linjer.append(f"  Samlet udbetaling: {godkendt_beløb:.2f} DKK")
+            linjer.append("")
+
+    # ── Afvisninger ─────────────────────────────────────────
     if afviste:
         if godkendte:
             linjer.append(

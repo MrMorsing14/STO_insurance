@@ -43,3 +43,13 @@ CONFIDENCE_AUTO_REJECT = 0.85
 
 # Dekomponering: hvor meget må summen af delkrav afvige fra totalbeløbet
 BELØB_SUM_TOLERANCE_DKK = 1.0
+
+# ── Goodwill-godkendelse ─────────────────────────────────
+# Delkrav under denne grænse i de angivne dækningstyper
+# godkendes som goodwill selvom betingelserne ikke er fuldt opfyldt.
+# Rationale: det koster mere at miste en kunde over 400 kr
+# end at dække en taxa til hospitalet.
+GOODWILL_THRESHOLD_DKK = 800.0
+GOODWILL_DÆKNINGSTYPER = {
+    "sygdom_og_hjemtransport",  # transport til/fra behandling, medicin
+}

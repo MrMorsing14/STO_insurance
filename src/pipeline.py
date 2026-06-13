@@ -12,7 +12,7 @@ Flow:
         → Confidence routing                                   [thresholds]
     → Aggregering → samlet afgørelse + kundebesked             [deterministisk]
 """
-from config.settings import CONFIDENCE_AUTO_APPROVE, CONFIDENCE_AUTO_REJECT
+from config.settings import CONFIDENCE_AUTO_APPROVE, CONFIDENCE_AUTO_REJECT, GOODWILL_THRESHOLD_DKK, GOODWILL_DÆKNINGSTYPER
 from src.aggregation import aggreger
 from src.decomposition.claim_decomposer import KANONISKE_DÆKNINGSTYPER, ClaimDecomposer
 from src.evaluation.llm_evaluator import LLMEvaluator
@@ -179,6 +179,33 @@ class STOPipeline:
 
         # Confidence routing pr. delkrav
         return self._apply_confidence_routing(delafgørelse)
+
+
+    def _apply_goodwill(self, delafgørelse: DelAfgørelse) -> DelAfgørelse:
+        """
+        Override: små afviste delkrav i transport/medicin-kategorier
+        godkendes som goodwill for at fastholde kunden.
+        """
+        if (
+            delafgørelse.afgørelse == DelAfgørelseType.AFVIST
+            and delafgørelse.dækningstype in GOODWILL_DÆKNINGSTYPER
+            and delafgørelse.beløb_dkk is not None
+            and 0 < delafgørelse.beløb_dkk <= GOODWILL_THRESHOLD_DKK
+        ):
+            return DelAfgørelse(
+                delkrav_id=delafgørelse.delkrav_id,
+                beskrivelse=delafgørelse.beskrivelse,
+                dækningstype=delafgørelse.dækningstype,
+                beløb_dkk=delafgørelse.beløb_dkk,
+                afgørelse=DelAfgørelseType.GODKENDT,
+                begrundelse=delafgørelse.begrundelse,  # keep original reasoning for audit
+                konfidens=delafgørelse.konfidens,
+                godkendt_beløb_dkk=delafgørelse.beløb_dkk,
+                relevante_betingelser=delafgørelse.relevante_betingelser,
+                metadata_filtreret=delafgørelse.metadata_filtreret,
+                goodwill=True,  # ← new field on DelAfgørelse
+            )
+        return delafgørelse
 
     @staticmethod
     def _apply_confidence_routing(d: DelAfgørelse) -> DelAfgørelse:

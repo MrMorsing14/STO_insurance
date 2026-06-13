@@ -90,6 +90,7 @@ class DelAfgørelse(BaseModel):
     beløb_dkk: Optional[float] = None
     afgørelse: DelAfgørelseType
     begrundelse: str
+    goodwill: bool = False
     konfidens: float = Field(ge=0.0, le=1.0)
     godkendt_beløb_dkk: Optional[float] = Field(
         default=None, description="Beløb der godkendes for delkravet (kan være lavere end ansøgt)"
